@@ -24,6 +24,7 @@
     "http-proxy": "^1.18.1",
     "https-proxy-agent": "^5.0.0",
     "mockttp": "^2.1.1",
+    "node-fetch": "^2.6.1",
     "request-as-curl": "^0.1.0",
     "request-to-curl": "^0.1.6",
     "url": "^0.10.3"
