@@ -15,7 +15,7 @@ test.describe("TextHighlightTextColor", async () => {
   test.beforeAll(async () => {
     browser = await chromium.launch({
       headless: false,
-      slowMo: 200,
+      slowMo: 50,
       devtools: false,
     });
     const initialPage = await browser.newPage();
@@ -57,14 +57,21 @@ test.describe("TextHighlightTextColor", async () => {
       } else if (url.includes("Box4Intl.js")) {
         path = "./mocks/Box4Intl.js";
       } else if (url.includes("wacBoot")) {
-        // path = "./mocks/wacBoot.min.js";
-        var wacBootContent = await fetch(
-          "https://localhost:8080/dist/wacBoot.js",
-          { agent: httpsAgent }
-        );
-        content = await wacBootContent.text();
-        contentType = "application/javascript; charset=UTF-8";
-        // path = "C:/msft/1JS/ooui/packages/onenote-online-boot/lib/WacBoot.js";
+        try {
+          var wacBootContent = await fetch(
+            "https://localhost:8080/dist/wacBoot.js",
+            { agent: httpsAgent }
+          );
+          content = await wacBootContent.text();
+          contentType = "application/javascript; charset=UTF-8";
+        } catch (e) {
+          console.log(
+            "https://localhost:8080/ not running fetching mocked wacBoot"
+          );
+        }
+        if (!content) {
+          path = "./mocks/wacBoot.min.js";
+        }
       } else if (url.includes("MicrosoftAjaxDS.js")) {
         path =
           "C:/msft/1JS/ooui/packages/wac-microsoftajax/src/MicrosoftAjaxDS.js";
